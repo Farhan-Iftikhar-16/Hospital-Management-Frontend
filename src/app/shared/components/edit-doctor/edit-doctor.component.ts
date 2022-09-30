@@ -18,7 +18,6 @@ export class EditDoctorComponent implements OnInit {
   form: FormGroup;
   educations: FormArray;
   experiences: FormArray;
-  hospitals = [];
   maxDate = new Date();
   genders = GENDERS;
   showLoader = false;
@@ -52,10 +51,9 @@ export class EditDoctorComponent implements OnInit {
       if (params.id && params.id === '0') {
         this.addEducation();
         this.addExperience();
+        this.form.get('createdBy').setValue(this.user._id);
       }
     });
-
-    this.getHospitals();
   }
 
   createForm(): void {
@@ -68,7 +66,6 @@ export class EditDoctorComponent implements OnInit {
       gender: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       DOB: ['', Validators.required],
-      hospital: ['', Validators.required],
       biography: [''],
       services: [''],
       specializations: [''],
@@ -150,23 +147,6 @@ export class EditDoctorComponent implements OnInit {
         designation: [experience ? experience.designation : '']
       })
     );
-  }
-
-  getHospitals(): void {
-    this.showLoader = true;
-
-    this.apiService.getHospitals().pipe(takeUntil(this.componentInView)).subscribe(response => {
-      this.showLoader = false;
-      this.hospitals = response.hospitals.map(hospital => {
-        return {
-          label: hospital.name,
-          value: hospital._id
-        };
-      });
-    }, error => {
-      this.showLoader = false;
-      this.toastService.error(error.error.message);
-    });
   }
 
   onProfileImageUpload(event): void {

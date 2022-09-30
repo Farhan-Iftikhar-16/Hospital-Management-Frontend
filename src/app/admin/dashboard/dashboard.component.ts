@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   hospitals;
   doctors;
   patients;
+  user;
   showLoader = false;
   componentInView = new Subject();
 
@@ -22,6 +23,9 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('user')){
+      this.user = JSON.parse(localStorage.getItem('user'));
+    }
     // this.getHospitals();
     // this.getPatients();
     // this.getDoctors();

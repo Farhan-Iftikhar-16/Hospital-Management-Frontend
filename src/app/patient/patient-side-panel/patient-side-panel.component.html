@@ -7,9 +7,9 @@
     </div>
 
     <div class="profile-details-container">
-      <b>{{user?.firstName}} {{user?.lastName}}</b>
-      <span><i class="birthday-icon"></i>{{user?.DOB | date: 'dd MMM YYYY'}}, {{getPatientAge() + ' Years'}}</span>
-      <span *ngIf="user?.addressDetails?.city && user?.addressDetails?.country"><i class="pi pi-map-marker me-1"></i>{{user?.addressDetails?.city}}, {{user?.addressDetails?.country}} </span>
+      <b class="text-capitalize">{{user?.firstName}} {{user?.lastName}}</b>
+      <span>{{user?.DOB | date: 'dd MMM YYYY'}}, {{getPatientAge() + ' Years'}}</span>
+      <span *ngIf="user?.addressDetails?.city && user?.addressDetails?.country">{{user?.addressDetails?.city}}, {{user?.addressDetails?.country}} </span>
     </div>
   </div>
 

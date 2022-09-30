@@ -13,10 +13,8 @@ import {ROLES, STATUS, STATUS_VALUE_SET} from "../../config/constant";
 export class HospitalsComponent implements OnInit {
 
   user;
-  selectedHospital;
   hospitals = [];
   filteredHospitals = []
-  showEditHospital = false;
   showLoader = false;
   roles = ROLES;
   status = STATUS;

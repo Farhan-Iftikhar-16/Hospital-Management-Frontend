@@ -2,13 +2,13 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {AdminWrapperComponent} from "./admin-wrapper/admin-wrapper.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
-import {HospitalsComponent} from "./hospitals/hospitals.component";
 import {DoctorsComponent} from "./doctors/doctors.component";
 import {PatientsComponent} from "./patients/patients.component";
 import {AdminProfileComponent} from "./admin-profile/admin-profile.component";
-import {AdminsListComponent} from "./admins-list/admins-list.component";
 import {EditDoctorComponent} from "../shared/components/edit-doctor/edit-doctor.component";
 import {EditPatientComponent} from "../shared/components/edit-patient/edit-patient.component";
+import {EditHospitalComponent} from "./edit-hospital/edit-hospital.component";
+import {HospitalsComponent} from "./hospitals/hospitals.component";
 
 const routes: Routes = [
   {
@@ -29,6 +29,10 @@ const routes: Routes = [
         component: HospitalsComponent
       },
       {
+        path: 'edit-hospital/:id',
+        component: EditHospitalComponent
+      },
+      {
         path: 'doctors',
         component: DoctorsComponent
       },
@@ -47,10 +51,6 @@ const routes: Routes = [
       {
         path: 'edit-profile/:id',
         component: AdminProfileComponent
-      },
-      {
-        path: 'admins-list',
-        component: AdminsListComponent
       }
     ]
   }

@@ -16,10 +16,8 @@ export class EditHospitalComponent implements OnInit {
   user;
   form: FormGroup;
   showLoader = false;
-  editMode = false;
   API_URL = environment.API_URL;
   componentInView = new Subject();
-  @Input() hospital;
   @Output() closeDialog = new EventEmitter();
 
   constructor(
@@ -36,13 +34,7 @@ export class EditHospitalComponent implements OnInit {
 
     this.createForm();
 
-    if (this.hospital) {
-      this.editMode = true;
-      this.form.patchValue(this.hospital);
-      this.form.get('email').disable();
-    }
-
-
+    this.getHospitalDetails();
   }
 
   createForm(): void {
@@ -50,8 +42,27 @@ export class EditHospitalComponent implements OnInit {
       _id: new FormControl(''),
       profileImage: new FormControl(''),
       name: new FormControl('', Validators.required),
+      createdBy: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       location: new FormControl('', Validators.required),
+    });
+  }
+
+  getHospitalDetails(): void {
+    this.showLoader = true;
+
+    this.apiService.getHospitalDetails().pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.showLoader = false;
+      if (response && response.hospital) {
+        this.form.patchValue(response.hospital);
+        this.form.get('email').disable();
+        return;
+      }
+
+      this.form.get('createdBy').setValue(this.user._id);
+    }, error => {
+      this.showLoader = false;
+      this.toastService.error(error.error.message);
     });
   }
 
@@ -67,11 +78,10 @@ export class EditHospitalComponent implements OnInit {
 
     const params = {
       ...this.form.value,
-      createdBy: this.user._id
     }
 
 
-    this.editMode ? this.updateHospital(params) : this.addHospital(params);
+    this.form.get('_id').value ? this.updateHospital(params) : this.addHospital(params);
   }
 
   updateHospital(params): void {

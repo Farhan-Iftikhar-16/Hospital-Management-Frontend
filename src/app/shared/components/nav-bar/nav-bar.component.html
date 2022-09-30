@@ -7,6 +7,7 @@
 
     <div class="d-flex align-items-center">
       <span *ngIf="user && user.role === roles.SUPER_ADMIN" class="me-3">Super Admin</span>
+      <span *ngIf="user && user.role !== roles.SUPER_ADMIN" class="me-3"> {{user?.firstName}} {{user?.lastName}}</span>
       <div style="cursor: pointer" *ngIf="user">
         <p-avatar *ngIf="user?.profileImage" [image]="API_URL + 'public/images/' + user?.profileImage" shape="circle" (click)="menu.toggle($event)"></p-avatar>
         <p-avatar *ngIf="!user?.profileImage" icon="pi pi-user" shape="circle" (click)="menu.toggle($event)"></p-avatar>

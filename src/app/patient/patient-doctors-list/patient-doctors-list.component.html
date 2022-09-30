@@ -47,8 +47,10 @@
               {{doctor?.addressDetails?.city}}, {{doctor?.addressDetails?.country}}
             </span>
 
-            <div *ngFor="let service of doctor.services" class="doctor-service">
-              <span>{{service}}</span>
+            <div class="d-flex align-items-center flex-wrap doctor-services-container">
+              <div *ngFor="let service of doctor.services" class="doctor-service">
+                <span>{{service}}</span>
+              </div>
             </div>
           </div>
         </div>

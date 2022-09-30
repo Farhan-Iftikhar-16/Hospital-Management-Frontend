@@ -7,8 +7,8 @@
     </div>
 
     <div class="profile-details-container d-flex flex-column align-items-center">
-      <b>Dr. {{user?.firstName}} {{user?.lastName}}</b>
-      <span class="text-center">{{user?.specializations?.toString()}}</span>
+      <b class="text-capitalize">Dr. {{user?.firstName}} {{user?.lastName}}</b>
+      <span class="text-center px-3 d-flex flex-wrap">{{user?.specializations?.toString()}}</span>
     </div>
   </div>
 

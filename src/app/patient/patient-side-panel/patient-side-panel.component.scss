@@ -41,22 +41,8 @@
       flex-direction: column;
       position: relative;
 
-      b {
+      b, span {
         text-align: center;
-      }
-
-      span {
-        text-align: center;
-      }
-
-      .birthday-icon {
-        position: absolute;
-        left: -27px;
-        top: 22px;
-        background:  url("../../../assets/images/birthday-icon.png");
-        background-size: 25px;
-        height: 25px;
-        width: 25px;
       }
     }
   }

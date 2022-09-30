@@ -32,7 +32,7 @@
                 <div class="table-main-image">
                   <img [src]="API_URL + 'public/images/' + hospital.profileImage" alt="logo">
                 </div>
-                <span class="cursor-pointer router-text" (click)="selectedHospital = hospital; showEditHospital = true">{{hospital.name}}</span>
+                <span class="cursor-pointer router-text" [routerLink]="'/admin/edit-hospital/' + hospital.createdBy">{{hospital.name}}</span>
               </div>
             </td>
             <td>{{hospital.location}}</td>
@@ -54,9 +54,6 @@
   </div>
 </div>
 
-<p-dialog class="upload-images-dialog" (onHide)="selectedHospital = null" [(visible)]="showEditHospital" [header]="!selectedHospital ? 'Add Hospital' : 'Edit Hospital'" [modal]="true" [resizable]="false" [draggable]="false" [dismissableMask]="true" [style]="{width: '50vw'}">
-  <app-edit-hospital *ngIf="showEditHospital" [hospital]="selectedHospital" (closeDialog)="showEditHospital = false; selectedHospital = null; getHospitals();"></app-edit-hospital>
-</p-dialog>
 
 
 <p-progressSpinner *ngIf="showLoader"></p-progressSpinner>

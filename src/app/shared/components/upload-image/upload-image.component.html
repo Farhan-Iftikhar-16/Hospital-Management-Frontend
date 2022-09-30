@@ -1,6 +1,6 @@
 <div class="logo-container">
   <div class="image-container">
-    <i *ngIf="!uploadedImage?.name" class="pi pi-user"></i>
+    <i *ngIf="!uploadedImage?.name" [ngClass]="icon ? icon : 'pi pi-user'"></i>
 
     <img *ngIf="uploadedImage?.name"  [src]="API_URL + 'public/images/' + uploadedImage.name" alt="">
 

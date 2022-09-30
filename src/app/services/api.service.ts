@@ -20,7 +20,7 @@ export class ApiService {
   }
 
   signup(params): Observable<any> {
-    return this.httpClient.post(`${this.apiURL}auth/create-account`, params);
+      return this.httpClient.post(`${this.apiURL}admin/add-admin`, params);
   }
 
   getUserDetailsByUserId(api): Observable<any> {
@@ -57,6 +57,10 @@ export class ApiService {
 
   getHospitals(): Observable<any> {
     return this.httpClient.get(`${this.apiURL}hospital/get-hospitals`);
+  }
+
+  getHospitalDetails(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}hospital/get-hospital-details`);
   }
 
   deleteHospital(id): Observable<any> {

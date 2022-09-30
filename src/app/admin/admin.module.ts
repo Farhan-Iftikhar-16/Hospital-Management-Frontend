@@ -7,9 +7,8 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {DoctorsComponent} from './doctors/doctors.component';
 import {PatientsComponent} from './patients/patients.component';
 import {AdminProfileComponent} from './admin-profile/admin-profile.component';
-import {AdminsListComponent} from './admins-list/admins-list.component';
-import {HospitalsComponent} from "./hospitals/hospitals.component";
 import {EditHospitalComponent} from "./edit-hospital/edit-hospital.component";
+import {HospitalsComponent} from "./hospitals/hospitals.component";
 
 @NgModule({
   declarations: [
@@ -18,7 +17,6 @@ import {EditHospitalComponent} from "./edit-hospital/edit-hospital.component";
     DoctorsComponent,
     PatientsComponent,
     AdminProfileComponent,
-    AdminsListComponent,
     HospitalsComponent,
     EditHospitalComponent
   ],

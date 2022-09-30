@@ -33,6 +33,7 @@ export class NavBarComponent implements OnInit {
 
     if (this.user && this.user.role === this.roles.ADMIN) {
       this.items = [
+        {label: 'Hospital Details', icon: 'pi pi-fw pi-building', command: () => this.navigateToEditHospital()},
         {label: 'Profile', icon: 'pi pi-fw pi-user-edit', command: () => this.navigateToAdminProfile()},
         {label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => this.logout()}
       ];
@@ -47,7 +48,6 @@ export class NavBarComponent implements OnInit {
 
     if (this.user && this.user.role === this.roles.SUPER_ADMIN) {
       this.items = [
-        {label: 'Admins', icon: 'pi pi-fw pi-user', command: () => this.navigateToAdminsList()},
         {label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => this.logout()}
       ];
     }
@@ -66,16 +66,16 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['/HMS/home']).then();
   }
 
+  navigateToEditHospital(): void {
+    this.router.navigate(['/admin/edit-hospital/' + this.user._id]).then();
+  }
+
   navigateToAdminProfile(): void {
     this.router.navigate(['/admin/edit-profile/' + this.user._id]).then();
   }
 
   navigateToDoctorProfile(): void {
     this.router.navigate(['/doctor/edit-profile/' + this.user._id]).then();
-  }
-
-  navigateToAdminsList(): void {
-    this.router.navigate(['/admin/admins-list']).then();
   }
 
   navigateToPatientProfile(): void {

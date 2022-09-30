@@ -46,6 +46,10 @@ export class EditPatientComponent implements OnInit {
       if (params.id && params.id !== '0' && this.user.role === ROLES.PATIENT) {
         this.getPatientDetailsByUserID();
       }
+
+      if (params.id && params.id === '0') {
+        this.form.get('createdBy').setValue(this.user._id);
+      }
     });
   }
 
