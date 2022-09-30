@@ -10,8 +10,7 @@ import {ANIMATIONS} from "../../config/animations";
 export class LandingComponent implements OnInit {
 
   navbarOptions = [
-    {label: 'Login', route: '/HMS/auth/login'},
-    {label: 'Signup', route: '/HMS/auth/signup'},
+    {label: 'Login', route: '/HMS/auth/login'}
   ];
 
   constructor() { }
