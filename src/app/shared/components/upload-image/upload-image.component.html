@@ -1,0 +1,18 @@
+<div class="logo-container">
+  <div class="image-container">
+    <i *ngIf="!uploadedImage?.name" class="pi pi-user"></i>
+
+    <img *ngIf="uploadedImage?.name"  [src]="API_URL + 'public/images/' + uploadedImage.name" alt="">
+
+  </div>
+
+  <div class="button-container">
+    <p-button label="Upload Image" class="p-button-primary" (click)="fileInput.click()"></p-button>
+
+    <p>Allowed JPG, JPEG or PNG</p>
+
+    <input type="file" accept="image/png, image/jpg, image/jpeg" #fileInput (change)="onImageUpload($event)" hidden="true">
+  </div>
+</div>
+
+

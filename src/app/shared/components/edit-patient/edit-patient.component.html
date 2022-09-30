@@ -1,0 +1,158 @@
+<div class="edit-patient-container" *ngIf="form">
+  <div class="row mb-5">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center">
+      <div class="content-main-heading">
+        <h3>{{form?.get('_id').value ? 'Edit Profile' : 'Add Patient'}}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <form [formGroup]="form">
+        <div class="basic-information-container">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <h5>Basic Information</h5>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+              <app-upload-image [setImageName]="form.get('profileImage') && form.get('profileImage').value ? form.get('profileImage').value: null" (profileImage)="onProfileImageUpload($event)"></app-upload-image>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="firstName">First Name <span class="required">*</span></label>
+                  <input type="text" pInputText id="firstName" [formControlName]="'firstName'">
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="lastName">Last Name <span class="required">*</span></label>
+                  <input type="text" pInputText id="lastName" [formControlName]="'lastName'">
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="email">Email <span class="required">*</span></label>
+                  <input type="text" pInputText id="email" [formControlName]="'email'">
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="phoneNumber">Phone Number <span class="required">*</span></label>
+                  <input type="text" pInputText id="phoneNumber" [formControlName]="'phoneNumber'">
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="gender">Gender <span class="required">*</span></label>
+                  <p-dropdown id="gender" [autoDisplayFirst]="false" [options]="genderOptions" [formControlName]="'gender'"></p-dropdown>
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="DOB">Date Of Birth <span class="required">*</span></label>
+                  <p-calendar [maxDate]="maxDate" id="DOB" [formControlName]="'DOB'"></p-calendar>
+                </app-form-control>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <app-form-control>
+                  <label for="blood-group">Blood Group <span class="required">*</span></label>
+                  <p-dropdown [options]="bloodGroupOptions" [autoDisplayFirst]="false" id="blood-group" [formControlName]="'bloodGroup'"></p-dropdown>
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="address-container">
+          <h5>Address & Location</h5>
+
+          <div class="row" [formGroupName]="'addressDetails'">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="addressLine1">Address 1</label>
+                  <input type="text" pInputText id="addressLine1" [formControlName]="'addressLine1'">
+                </app-form-control>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="addressLine2">Address 2</label>
+                  <input type="text" pInputText id="addressLine2" [formControlName]="'addressLine2'">
+                </app-form-control>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="city">City</label>
+                  <input type="text" pInputText id="city" [formControlName]="'city'">
+                </app-form-control>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="state">State</label>
+                  <input type="text" pInputText id="state" [formControlName]="'state'">
+                </app-form-control>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="country">Country</label>
+                  <input type="text" pInputText id="country" [formControlName]="'country'">
+                </app-form-control>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="mb-3 form-group">
+                <app-form-control>
+                  <label for="postalCode">Postal Code</label>
+                  <input type="text" pInputText id="postalCode" [formControlName]="'postalCode'">
+                </app-form-control>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p-button [label]="'Save Changes'" class="p-button-success mb-3" (click)="onSaveChangesClicked()"></p-button>
+      </form>
+
+    </div>
+  </div>
+</div>
+

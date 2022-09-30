@@ -1,0 +1,62 @@
+.doctor-dashboard-container {
+  .analytics-container {
+    border: 1px solid #f0f0f0;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    padding: 20px;
+
+    .total-patient-container, .today-patient-container {
+      border-right: 1px solid #f0f0f0;
+    }
+
+    span {
+      color: #757575 !important;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-tabview {
+    border-radius: 4px !important;
+    border: 1px solid #f0f0f0 !important;
+
+    .p-tabview-nav-content {
+      padding: 20px 10px !important;
+      border-bottom: 1px solid #f0f0f0 !important;
+
+      .p-tabview-nav {
+        background: none !important;
+        border: none !important;
+
+        .p-tabview-nav-link {
+          padding: 15px 20px;
+          border-radius: 50px;
+          border: none !important;
+          transition: none !important;
+          color: #000000;
+        }
+
+        .p-tabview-nav-link:hover {
+          color: #000000 !important;
+          background-color: #f0f0f0 !important;
+        }
+
+        li .p-tabview-nav-link:not(.p-disabled):focus {
+          outline: none !important;
+          outline-offset: unset !important;
+          box-shadow: none !important;
+        }
+
+        .p-highlight .p-tabview-nav-link {
+          background-color: #0ce0ff !important;
+          color: white !important;
+          border: none !important;
+        }
+
+        .p-tabview-ink-bar {
+          display: none !important;
+        }
+      }
+    }
+  }
+}

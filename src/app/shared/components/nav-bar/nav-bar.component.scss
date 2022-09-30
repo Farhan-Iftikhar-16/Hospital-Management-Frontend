@@ -1,0 +1,88 @@
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  align-items: center;
+  z-index: 1;
+  padding: 10px 30px;
+  border-bottom: 1px solid #F5F6FA;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    li {
+      margin-right: 10px;
+
+      a{
+        color: #0ce0ff !important;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      a:hover {
+        background: #0ce0ff !important;
+        color: #FFFFFF !important;
+      }
+
+      a.is-active {
+        color: #FFFFFF !important;
+        background: #0ce0ff !important;
+      }
+    }
+
+    li:last-child {
+      margin-right: 0 !important;
+    }
+  }
+
+  .pi-user {
+    background: #FFFFFF;
+    color: #3D3B40;
+    border: 2px solid #3D3B40;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+}
+
+:host::ng-deep {
+  .p-menu {
+    top: 55px !important;
+
+    .p-menu-list {
+      .p-menuitem-link {
+        border: 2px solid white !important;
+
+        .p-menuitem-text, .p-menuitem-icon {
+          font-weight: 400 !important;
+          color: #212529 !important;
+          font-size: 14px !important;
+        }
+      }
+
+      .p-menuitem-link:not(.p-disabled):hover{
+        background-color: transparent !important;
+        .p-menuitem-text, .p-menuitem-icon  {
+          color: #0ce0ff !important;
+        }
+      }
+
+      .p-menuitem:last-child .p-menuitem-link {
+        border-top-color: #eef1fe !important;
+      }
+    }
+  }
+
+}
+

@@ -1,0 +1,25 @@
+.admin-profile-container {
+  .image-container {
+    display: flex;
+    margin-bottom: 25px;
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
+    width: 93px;
+    height: 93px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: fill;
+    }
+  }
+
+  .personal-Information {
+    margin-bottom: 20px;
+  }
+
+  hr {
+    background-color:  #eef1fe !important;
+    height: 2px;
+  }
+}

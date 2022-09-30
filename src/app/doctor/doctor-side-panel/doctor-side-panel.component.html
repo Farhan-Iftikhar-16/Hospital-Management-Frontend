@@ -1,0 +1,27 @@
+<div class="doctor-side-panel-container">
+  <div class="details-container">
+    <div class="image-container">
+      <img *ngIf="user?.profileImage" [src]="API_URL + 'public/images/' + user?.profileImage" alt="">
+
+      <i *ngIf="!user?.profileImage" class="pi pi-user"></i>
+    </div>
+
+    <div class="profile-details-container d-flex flex-column align-items-center">
+      <b>Dr. {{user?.firstName}} {{user?.lastName}}</b>
+      <span class="text-center">{{user?.specializations?.toString()}}</span>
+    </div>
+  </div>
+
+  <div class="navigation-container">
+    <div class="side-panel-menu">
+      <ul>
+        <li *ngFor="let item of sidePanelOptions">
+          <a [routerLink]="item.route" [routerLinkActive]="'active'">
+            <i [class]="item.icon"></i>
+            <span>{{item.label}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

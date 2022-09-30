@@ -1,0 +1,52 @@
+.reviews-container {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 20px;
+
+  .review-container {
+    display: flex;
+
+    .pi-user {
+      height: 48px;
+      width: 48px;
+      border: 1px solid #f0f0f0;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .reviewed-days-text {
+      color: #757575;
+      font-size: 14px;
+    }
+
+    .recommended {
+      color: #28a745;
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    .comment-text {
+      color: #757575;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-button-link-primary .p-button {
+    .p-button-label {
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .replay-button .p-button {
+    .p-button-label {
+      font-weight: 550 !important;
+    }
+  }
+}

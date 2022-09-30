@@ -1,0 +1,30 @@
+<form [formGroup]="form" *ngIf="form">
+  <ng-container [formArrayName]="'timeSlots'">
+    <ng-container [formGroupName]="index" *ngFor="let slot of timeSlots.controls; let index=index">
+      <div class="row" >
+        <div class="mb-3 form-group col-lg-5 col-md-5 col-sm-5">
+          <app-form-control>
+            <label [for]="'start-time-' + index">Start Time</label>
+            <p-dropdown class="w-100" [id]="'start-time-' + index" [options]="timeSlotsOptions" [formControlName]="'startTime'"></p-dropdown>
+          </app-form-control>
+        </div>
+
+        <div class="mb-3 form-group col-lg-5 col-md-5 col-sm-5">
+          <app-form-control>
+            <label [for]="'end-time-' + index">End Time</label>
+            <p-dropdown class="w-100" [id]="'end-time-' + index" [autoDisplayFirst]="false" [options]="timeSlotsOptions" [formControlName]="'endTime'"></p-dropdown>
+          </app-form-control>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2">
+          <p-button [icon]="'pi pi-trash'" class="p-button-danger" (click)="removeTimeSlot(index)"></p-button>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <p-button [label]="'Add More'" (click)="addTimeSlot()" class="p-button-link-primary"></p-button>
+    <p-button [label]="'Save'" (click)="onSaveClicked()" class="p-button-link-primary"></p-button>
+  </div>
+</form>

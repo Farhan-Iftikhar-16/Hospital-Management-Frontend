@@ -1,0 +1,42 @@
+.patients-list-container {
+  .patient-details-container {
+    border: 1px solid #f0f0f0;
+    padding: 20px 40px;
+    border-radius: 4px;
+    word-wrap: break-word;
+    text-align: center;
+
+    img {
+      border-radius: 50%;
+      height: 100px;
+      width: 100px;
+      object-fit: fill;
+    }
+
+    h6 {
+      margin-bottom: 0 !important;
+      cursor: pointer;
+      display: inline;
+    }
+
+    h6:hover {
+      color: #09dca4;
+    }
+
+    .pi-user {
+      font-size: 50px;
+      border: 1px solid #f0f0f0;
+      border-radius: 50%;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    span, .pi-map-marker {
+      color: #757575;
+      font-weight: 400;
+      font-size: 13px;
+    }
+  }
+}

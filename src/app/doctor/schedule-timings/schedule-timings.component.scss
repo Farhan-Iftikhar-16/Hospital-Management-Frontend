@@ -1,0 +1,63 @@
+.days-and-slots-time-container {
+  border: 1px solid #f0f0f0;
+  border-radius: 6px;
+  padding: 20px;
+
+  .days-container {
+    margin-bottom: 20px;
+  }
+
+  .slots-timing-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .slot-timing-container {
+      background-color: #d9534f;
+      border: 1px solid #d43f3a;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+      margin: 10px 15px 0 0;
+      padding: 6px 15px;
+      width: 200px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+
+      .pi-times {
+        cursor: pointer;
+      }
+    }
+
+    .slot-timing-container:nth-child(5n) {
+      margin-right: 0 !important;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-selectbutton {
+    display: flex;
+
+    .p-button {
+      flex: 1 1 0;
+    }
+
+    .p-button.p-highlight {
+      background: #ff4877;
+      border-color: #ff4877 !important;
+    }
+  }
+
+  .p-button-link-primary .p-button {
+    .pi-pencil {
+      font-size: 11px !important;
+    }
+  }
+
+  .p-button-danger .p-button {
+    position: relative;
+    top: 24px;
+  }
+}

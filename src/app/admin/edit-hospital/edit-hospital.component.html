@@ -1,0 +1,37 @@
+<div class="edit-hospital-container">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12 d-flex flex-column align-items-center justify-content-center mb-5">
+        <app-upload-image [setImageName]="form && form.get('profileImage') && form.get('profileImage').value ? form.get('profileImage').value : null" (profileImage)="onProfileImageUpload($event)"></app-upload-image>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center align-items-center flex-column">
+        <div class="mb-3 form-group w-100">
+          <app-form-control>
+            <label for="name">Name</label>
+            <input type="text" pInputText id="name" [formControlName]="'name'">
+          </app-form-control>
+        </div>
+
+        <div class="mb-3 form-group w-100">
+          <app-form-control>
+            <label for="email">Email</label>
+            <input type="text" pInputText id="email" [formControlName]="'email'">
+          </app-form-control>
+        </div>
+
+        <div class="form-group w-100 mb-3">
+          <app-form-control>
+            <label for="location">Location</label><input type="text" pInputText id="location" [formControlName]="'location'">
+          </app-form-control>
+        </div>
+
+        <div>
+          <p-button [label]="editMode ? 'Update': 'Add Hospital'" (click)="saveHospital()" class="p-button-primary"></p-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>

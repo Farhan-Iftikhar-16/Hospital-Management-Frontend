@@ -1,0 +1,71 @@
+.patient-doctors-list-container {
+  .doctor-details-container {
+    padding: 20px;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    .doctor-image {
+      img {
+        margin-right: 20px;
+        width: 150px;
+        height: 150px;
+        object-fit: fill;
+        border-radius: 20px;
+      }
+
+      .pi-user {
+        width: 150px;
+        height: 150px;
+        font-size: 70px;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    .doctor-name {
+      text-transform: capitalize;
+    }
+
+    .doctor-education {
+      font-size: 14px;
+      color: #757575;
+      margin-bottom: 15px;
+    }
+
+    .doctor-specializations {
+      color: #20c0f3;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .doctor-reviews {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .doctor-address {
+      color: #757575;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .doctor-service {
+      border-radius: 4px;
+      border: 1px solid #f0f0f0;
+      padding: 10px 5px;
+      font-size: 12px;
+    }
+  }
+}
+
+:host::ng-deep {
+  .p-rating {
+    margin-bottom: 0 !important;
+
+    .p-rating-icon {
+      font-size: 15px !important;
+    }
+  }
+}

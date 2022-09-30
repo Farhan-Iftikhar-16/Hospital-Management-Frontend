@@ -1,0 +1,39 @@
+.basic-information-container, .hospital-container, .about-me-container, .address-container, .services-and-specialization-container, .education-container,
+.experience-container {
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,.125);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.add-more-text {
+  color: #20c0f3;
+  margin-left: 10px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.w-max-content {
+  width: max-content;
+}
+
+:host::ng-deep {
+  .p-button-primary.rounded-circle {
+    .p-button-icon-only {
+      padding: 5px !important;
+      border-radius: 50% !important;
+      width: 20px !important;
+      height: 20px !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .pi-plus.p-button-icon {
+        font-size: 8px !important;
+        font-weight: 900;
+      }
+    }
+  }
+}

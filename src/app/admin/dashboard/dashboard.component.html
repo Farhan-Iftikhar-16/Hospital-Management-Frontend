@@ -1,0 +1,84 @@
+<div class="dashboard-container">
+  <div class="row mb-5">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="content-main-heading">
+        <h3>Dashboard</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="content-sub-heading">
+        <h4>Overview</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row overview-containers">
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="hospitals-overview-container overview-container">
+        <i class="pi pi-building"></i>
+        <div class="overview-details">
+          <span class="title">Hospitals</span>
+          <span class="count">4505</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="doctors-overview-container overview-container">
+        <i class="pi pi-user-plus"></i>
+        <div class="overview-details">
+          <span class="title">Doctors</span>
+          <span class="count">4505</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12">
+      <div class="patients-overview-container overview-container">
+        <i class="pi pi-users"></i>
+        <div class="overview-details">
+          <span class="title">Patients</span>
+          <span class="count">4505</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="content-sub-heading">
+        <h4>Charts</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="chart-container">
+        <h5>Hospitals</h5>
+        <p-chart type="bar" [data]="hospitals"></p-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="chart-container">
+        <h5>Doctors</h5>
+        <p-chart type="bar" [data]="doctors"></p-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="chart-container">
+        <h5>Patients</h5>
+        <p-chart type="bar" [data]="patients"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
