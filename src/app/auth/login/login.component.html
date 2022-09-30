@@ -30,7 +30,7 @@
         <div class="d-flex justify-content-center mb-3">
           <p-button (click)="onSignInClicked()" class="p-button-primary" label="Sign In"></p-button>
         </div>
-        <div>
+        <div *ngIf="false">
           <p style="font-size: 14px; text-align: center; margin-bottom: 5px;">Not signed up?<a [routerLink] = "['/HMS/auth/signup']" style="text-decoration: none; color: #00dbfb; font-weight: bolder;margin-left: 5px;">Create an account.</a></p>
         </div>
       </form>
