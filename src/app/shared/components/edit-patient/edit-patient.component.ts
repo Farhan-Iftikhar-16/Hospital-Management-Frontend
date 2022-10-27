@@ -19,6 +19,7 @@ export class EditPatientComponent implements OnInit {
   genderOptions = GENDERS;
   bloodGroupOptions = BLOOD_GROUP_VALUE_SET;
   showLoader = false;
+  maxDate = new Date();
   componentInView = new Subject();
 
   constructor(
@@ -55,7 +56,7 @@ export class EditPatientComponent implements OnInit {
 
   createForm(): void {
     this.form = this.formBuilder.group({
-      _id: [''],
+      id: [''],
       profileImage: [''],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       firstName: ['', Validators.required],
@@ -103,6 +104,7 @@ export class EditPatientComponent implements OnInit {
   setPatientDetails(response): void {
     if (response && response.patient) {
       this.form.patchValue(response.patient);
+      this.form.get('id').setValue(response.patient._id);
     }
   }
 
@@ -116,7 +118,7 @@ export class EditPatientComponent implements OnInit {
       return;
     }
 
-    if (!this.form.get('_id').value && (this.user.role === ROLES.ADMIN || this.user.role === ROLES.SUPER_ADMIN)) {
+    if (!this.form.get('id').value && (this.user.role === ROLES.ADMIN || this.user.role === ROLES.SUPER_ADMIN)) {
       this.form.get('createdBy').setValue(this.user._id);
     }
 
@@ -126,7 +128,7 @@ export class EditPatientComponent implements OnInit {
       ...this.form.value,
     };
 
-    !params._id ? this.addPatient(params) : this.updatePatient(params);
+    !params.id ? this.addPatient(params) : this.updatePatient(params);
   }
 
   addPatient(params): void {

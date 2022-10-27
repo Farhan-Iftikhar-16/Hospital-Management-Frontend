@@ -3,6 +3,7 @@ import {environment} from "../../../environments/environment";
 import {ToastService} from "../../services/toast.service";
 import {ApiService} from "../../services/api.service";
 import {Subject, takeUntil} from "rxjs";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-doctor-patients-list',
@@ -12,42 +13,10 @@ import {Subject, takeUntil} from "rxjs";
 export class DoctorPatientsListComponent implements OnInit {
 
   showLoader = false;
+  showGuestPatients = false;
   API_URL = environment.API_URL;
-  patients = [
-    {
-      profileImage:'',
-      name: 'Richard Wilson',
-      addressDetails: {
-        country: 'USA',
-        city: 'Florida',
-      },
-      phoneNumber: '123456789',
-      age: '38 Years',
-      bloodGroup: 'B+'
-    },
-    {
-      profileImage:'',
-      name: 'Richard Wilson',
-      addressDetails: {
-        country: 'USA',
-        city: 'Florida',
-      },
-      phoneNumber: '123456789',
-      age: '38 Years',
-      bloodGroup: 'B+'
-    },
-    {
-      profileImage:'',
-      name: 'Richard Wilson',
-      addressDetails: {
-        country: 'USA',
-        city: 'Florida',
-      },
-      phoneNumber: '123456789',
-      age: '38 Years',
-      bloodGroup: 'B+'
-    }
-  ];
+  patients = [];
+  guestPatients = [];
   componentInView = new Subject();
 
   constructor(
@@ -61,13 +30,18 @@ export class DoctorPatientsListComponent implements OnInit {
 
   getPatients(): void {
     this.showLoader = false;
-    this.apiService.getPatients().pipe(takeUntil(this.componentInView)).subscribe(response => {
+    this.apiService.getRecentPatients().pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.showLoader = false;
       this.patients = response.patients;
+      this.guestPatients = response.guestPatients;
     }, error => {
       this.showLoader = false;
       this.toastService.error(error.error.message);
-    })
+    });
+  }
+
+  getAge(patient): number {
+    return moment(new Date()).diff(moment(patient.DOB).format('MM/DD/YYYY'), 'years');
   }
 
 }

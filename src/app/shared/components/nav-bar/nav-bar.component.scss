@@ -3,7 +3,6 @@
   justify-content: space-between;
   height: 70px;
   align-items: center;
-  z-index: 1;
   padding: 10px 30px;
   border-bottom: 1px solid #F5F6FA;
   position: absolute;
@@ -21,22 +20,22 @@
       margin-right: 10px;
 
       a{
-        color: #0ce0ff !important;
+        color: #15558d !important;
         cursor: pointer;
         text-decoration: none;
-        font-weight: 600;
+        font-weight: light;
         padding: 10px;
         border-radius: 8px;
       }
 
       a:hover {
-        background: #0ce0ff !important;
+        background: #15558d !important;
         color: #FFFFFF !important;
       }
 
       a.is-active {
         color: #FFFFFF !important;
-        background: #0ce0ff !important;
+        background: #15558d !important;
       }
     }
 

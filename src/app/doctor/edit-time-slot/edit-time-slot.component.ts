@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastService} from "../../services/toast.service";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-edit-time-slot',
@@ -40,6 +41,29 @@ export class EditTimeSlotComponent implements OnInit {
       startTime: new FormControl(null, [Validators.required]),
       endTime: new FormControl(null, [Validators.required]),
     })
+  }
+
+  shouldBeAfterStartTime(index) {
+    console.log(this.form);
+    const endTime = this.timeSlots.controls[index].get('endTime').value;
+
+    if (!endTime) {
+      return null;
+    }
+
+    if (this.timeSlots.controls[index].get('startTime')) {
+      const startTime = this.timeSlots.controls[index].get('startTime').value;
+
+      if (!startTime) {
+        return null;
+      }
+
+      console.log(startTime, endTime);
+
+      console.log(moment(moment(endTime)).isAfter( startTime));
+    }
+
+    return null;
   }
 
   addTimeSlot(): void {

@@ -5,6 +5,7 @@ import {UtilService} from "../../services/util.service";
 import {Router} from "@angular/router";
 import {ToastService} from "../../services/toast.service";
 import {Subject, takeUntil} from "rxjs";
+import {PATTERNS} from "../../config/constant";
 
 @Component({
   selector: 'app-signup',
@@ -32,8 +33,8 @@ export class SignupComponent implements OnInit {
   createForm(): void {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
-      confirmPassword: new FormControl(null, [Validators.required, Validators.minLength(8)]),
+      password: new FormControl(null, [Validators.required, Validators.pattern(PATTERNS.PASSWORD)]),
+      confirmPassword: new FormControl(null, [Validators.required, Validators.pattern(PATTERNS.PASSWORD)]),
     });
   }
 

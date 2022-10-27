@@ -37,19 +37,6 @@
 }
 
 :host::ng-deep {
-  .p-selectbutton {
-    display: flex;
-
-    .p-button {
-      flex: 1 1 0;
-    }
-
-    .p-button.p-highlight {
-      background: #ff4877;
-      border-color: #ff4877 !important;
-    }
-  }
-
   .p-button-link-primary .p-button {
     .pi-pencil {
       font-size: 11px !important;

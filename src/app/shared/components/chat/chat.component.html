@@ -1,0 +1,68 @@
+<div class="chat-container">
+  <div class="row mb-3">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="search-user d-flex">
+        <p-autoComplete  class="flex-grow-1" [field]="'name'" [suggestions]="suggestions" (onSelect)="selectedUser = $event; joinChat()" [placeholder]="'Search User'" (completeMethod)="searchUser($event)"></p-autoComplete>
+        <p-button class="p-button-teritory ms-3" [label]="'Search'"></p-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="userRecentChats && userRecentChats.length === 0">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h5>No Chat Found</h5>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="userRecentChats && userRecentChats.length > 0">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="recent-users-container d-flex align-items-center">
+        <div class="user-container me-3" *ngFor="let chat of userRecentChats">
+          <ng-container *ngIf="user && user?.role === 'PATIENT'">
+            <div>
+              <img *ngIf="chat.doctor && chat.doctor.profileImage" [src]="API_URL + 'public/images/' + chat.doctor.profileImage" alt="">
+              <i *ngIf="!chat.doctor || (chat.doctor && !chat.doctor.profileImage)" class="pi pi-user"></i>
+            </div>
+            <span (click)="selectedUser = chat.doctor; joinChat(); messages = chat.messages">{{chat?.doctor?.name | truncate: 20}}</span>
+          </ng-container>
+
+          <ng-container *ngIf="user && user?.role === 'DOCTOR'">
+            <div>
+              <img *ngIf="chat.patient && chat.patient.profileImage" [src]="API_URL + 'public/images/' + chat.patient.profileImage" alt="">
+              <i *ngIf="!chat.patient || (chat.patient && !chat.patient.profileImage)" class="pi pi-user"></i>
+            </div>
+            <span (click)="selectedUser = chat.patient; joinChat(); messages = chat.messages">{{chat?.patient?.name | truncate: 20}}</span>
+          </ng-container>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr style="height: 5px; background-color: #15558d; opacity: 1" *ngIf="selectedUser">
+
+  <div class="row mb-3" *ngIf="selectedUser">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="selected-user-container d-flex">
+        <div class="me-3 mb-3">
+          <img *ngIf="selectedUser && selectedUser.profileImage" [src]="API_URL + 'public/images/' + selectedUser.profileImage" alt="">
+          <i *ngIf="!selectedUser || (selectedUser && !selectedUser.profileImage)" class="pi pi-user"></i>
+        </div>
+        <span>{{selectedUser?.name}}</span>
+      </div>
+      <div class="messages-container">
+        <div class="mb-3" [ngClass]="message.user === this.user._id ? 'send': 'received'" *ngFor="let message of messages">
+          <div class="message-container send" >
+            <p>{{message?.message}}</p>
+            <span>{{getMessageTime(message?.dateAndTime)}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="send-message-container d-flex mt-3">
+        <input type="text" pInputText [(ngModel)]="message" name="message" class="flex-grow-1 me-3">
+        <p-button class="p-button-primary" (click)="sendMessage()" [icon]="'pi pi-telegram'"></p-button>
+      </div>
+    </div>
+  </div>
+</div>

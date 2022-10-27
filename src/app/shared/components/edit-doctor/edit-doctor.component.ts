@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UtilService} from "../../../services/util.service";
 import {Subject, takeUntil} from "rxjs";
@@ -19,9 +19,11 @@ export class EditDoctorComponent implements OnInit {
   educations: FormArray;
   experiences: FormArray;
   maxDate = new Date();
-  genders = GENDERS;
+  genders = GENDERS;0
   showLoader = false;
+  readMode = false;
   componentInView = new Subject();
+  @Input() doctor;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,11 +56,19 @@ export class EditDoctorComponent implements OnInit {
         this.form.get('createdBy').setValue(this.user._id);
       }
     });
+
+    if (this.doctor) {
+      this.form.patchValue(this.doctor);
+      this.readMode = true;
+      for (let controlsKey in this.form.controls) {
+        this.form.controls[controlsKey].disable();
+      }
+    }
   }
 
   createForm(): void {
     this.form = this.formBuilder.group({
-      _id: [''],
+      id: [''],
       profileImage: [''],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       firstName: ['', Validators.required],
@@ -111,6 +121,7 @@ export class EditDoctorComponent implements OnInit {
     if (response && response.doctor) {
       const doctor = response.doctor;
       this.form.patchValue(doctor);
+      this.form.get('id').setValue(response.doctor._id);
 
       if (doctor && doctor.education && doctor.education.length > 0) {
         doctor.education.forEach(education => {
@@ -159,7 +170,7 @@ export class EditDoctorComponent implements OnInit {
       return;
     }
 
-    if (!this.form.get('_id').value && (this.user.role === ROLES.ADMIN || this.user.role === ROLES.SUPER_ADMIN)) {
+    if (!this.form.get('id').value && (this.user.role === ROLES.ADMIN || this.user.role === ROLES.SUPER_ADMIN)) {
       this.form.get('createdBy').setValue(this.user._id);
     }
 
@@ -169,7 +180,7 @@ export class EditDoctorComponent implements OnInit {
       ...this.form.value,
     };
 
-    !params._id ? this.addDoctor(params) : this.updateDoctor(params);
+    !params.id ? this.addDoctor(params) : this.updateDoctor(params);
   }
 
   addDoctor(params): void {

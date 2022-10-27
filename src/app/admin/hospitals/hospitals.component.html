@@ -6,8 +6,6 @@
       </div>
       <div class="d-flex align-items-center"  *ngIf="user && user.role === roles.ADMIN">
         <p-dropdown [options]="statusValueSet" (onChange)="filterHospitalsList($event)" class="me-3"></p-dropdown>
-
-        <p-button label="Add Hospital" class="p-button-primary" (click)="showEditHospital = true"></p-button>
       </div>
     </div>
   </div>
@@ -18,10 +16,11 @@
                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 22.5%">Name</th>
-            <th style="width: 22.5%">Location</th>
-            <th style="width: 20%">Doctors</th>
-            <th style="width: 20%">Patients</th>
+            <th style="width: 25%">Name</th>
+            <th style="width: 15%">Location</th>
+            <th style="width: 15%;">Admin</th>
+            <th style="width: 15%">Doctors</th>
+            <th style="width: 15%">Patients</th>
             <th style="width: 15%">Account Status</th>
           </tr>
         </ng-template>
@@ -30,14 +29,26 @@
             <td>
               <div class="d-flex align-items-center">
                 <div class="table-main-image">
-                  <img [src]="API_URL + 'public/images/' + hospital.profileImage" alt="logo">
+                  <img *ngIf="hospital?.profileImage" [src]="API_URL + 'public/images/' + hospital.profileImage" alt="logo">
                 </div>
-                <span class="cursor-pointer router-text" [routerLink]="'/admin/edit-hospital/' + hospital.createdBy">{{hospital.name}}</span>
+                <span class="cursor-pointer router-text text-capitalize" [routerLink]="'/admin/edit-hospital/' + hospital._id">{{hospital?.name}}</span>
               </div>
             </td>
-            <td>{{hospital.location}}</td>
-            <td>{{hospital.doctors}}</td>
-            <td>{{hospital.patients}}</td>
+            <td>{{hospital?.location}}</td>
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="table-main-image">
+                  <img *ngIf="hospital.admin.profileImage" [src]="API_URL + 'public/images/' + hospital.admin.profileImage" alt="logo">
+                  <i *ngIf="!hospital.admin.profileImage" class="pi pi-user"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="text-capitalize">{{hospital?.admin?.name}}</span>
+                  <span style="color: #7e84a3; font-size: 11px !important;">{{hospital?.admin?.email}}</span>
+                </div>
+              </div>
+            </td>
+            <td>{{hospital?.doctors}}</td>
+            <td>{{hospital?.patients}}</td>
             <td>
               <p-inputSwitch [ngModel]="hospital.status === status.ACTIVE" (onChange)="updateHospitalStatus(hospital)"></p-inputSwitch>
             </td>
@@ -53,9 +64,5 @@
     </div>
   </div>
 </div>
-
-
-
-<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

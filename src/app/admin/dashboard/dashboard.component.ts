@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {ToastService} from "../../services/toast.service";
 import {Subject, takeUntil} from "rxjs";
+import {ROLES} from "../../config/constant";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +14,12 @@ export class DashboardComponent implements OnInit {
   hospitals;
   doctors;
   patients;
+  totalHospitals;
+  totalDoctors;
+  totalPatients;
   user;
-  showLoader = false;
+  roles = ROLES;
+  isAnalyticsResponseReceived = false;
   componentInView = new Subject();
 
   constructor(
@@ -26,16 +31,14 @@ export class DashboardComponent implements OnInit {
     if (localStorage.getItem('user')){
       this.user = JSON.parse(localStorage.getItem('user'));
     }
-    // this.getHospitals();
-    // this.getPatients();
-    // this.getDoctors();
+
     this.hospitals = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       datasets: [
         {
           label: 'Hospitals',
           backgroundColor: '#0ce0ff',
-          data: [65, 59, 80, 81, 56, 55, 40, 50 ,49 ,40 , 43, 100]
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ]
     };
@@ -46,7 +49,7 @@ export class DashboardComponent implements OnInit {
         {
           label: 'Doctors',
           backgroundColor: '#1b5a90',
-          data: [65, 59, 80, 81, 56, 55, 40, 50 ,49 ,40 , 43, 100]
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ]
     };
@@ -57,46 +60,38 @@ export class DashboardComponent implements OnInit {
         {
           label: 'Patients',
           backgroundColor: '#ffbc00',
-          data: [65, 59, 80, 81, 56, 55, 40, 50 ,49 ,40 , 43, 100]
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
       ]
     };
+
+    this.user && this.user.role === ROLES.SUPER_ADMIN ? this.getSuperAdminAnalytics(): this.getAdminAnalytics();
   }
 
-  // getHospitals(): void {
-  //   this.showLoader = true;
-  //
-  //   this.apiService.getHospitals().pipe(takeUntil(this.componentInView)).subscribe(response => {
-  //     this.showLoader = false;
-  //     this.doctors = response.doctors;
-  //   }, error => {
-  //     this.showLoader = false;
-  //     this.toastService.error(error.error.message);
-  //   });
-  // }
-
-  getPatients(): void {
-    // this.showLoader = true;
-    //
-    // this.apiService.getPatients().pipe(takeUntil(this.componentInView)).subscribe(response => {
-    //   this.showLoader = false;
-    //   this.doctors = response.doctors;
-    // }, error => {
-    //   this.showLoader = false;
-    //   this.toastService.error(error.error.message);
-    // });
+  getSuperAdminAnalytics(): void {
+    this.apiService.getSuperAdminAnalytics().pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.totalDoctors = response.doctors;
+      this.totalPatients = response.patients;
+      this.doctors.datasets[0].data = response.chartData.doctors;
+      this.patients.datasets[0].data = response.chartData.patients;
+      this.totalHospitals = response.hospitals;
+      this.hospitals.datasets[0].data = response.chartData.hospitals;
+      this.isAnalyticsResponseReceived = true;
+    }, error => {
+      this.toastService.error(error.error.message);
+    });
   }
 
-  getDoctors(): void {
-    // this.showLoader = true;
-    //
-    // this.apiService.getDoctors().pipe(takeUntil(this.componentInView)).subscribe(response => {
-    //   this.showLoader = false;
-    //   this.doctors = response.doctors;
-    // }, error => {
-    //   this.showLoader = false;
-    //   this.toastService.error(error.error.message);
-    // });
+  getAdminAnalytics(): void {
+    this.apiService.getAdminAnalytics().pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.totalDoctors = response.doctors;
+      this.totalPatients = response.patients;
+      this.doctors.datasets[0].data = response.chartData.doctors;
+      this.patients.datasets[0].data = response.chartData.patients;
+      this.isAnalyticsResponseReceived = true;
+    }, error => {
+      this.toastService.error(error.error.message);
+    });
   }
 
 }

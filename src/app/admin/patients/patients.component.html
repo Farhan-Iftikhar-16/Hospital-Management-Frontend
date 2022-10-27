@@ -19,7 +19,7 @@
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 22.5%">Patient</th>
-            <th style="width: 17.5%">Last Visit</th>
+            <th style="width: 17.5%">Email</th>
             <th style="width: 20%">Blood Group</th>
             <th style="width: 10%">Phone Number</th>
             <th style="width: 10%">Account Status</th>
@@ -35,16 +35,22 @@
                   <i *ngIf="!patient?.profileImage" class="pi pi-user"></i>
                 </div>
                 <div class="d-flex flex-column">
-                  <span class="cursor-pointer router-text" [routerLink]="'/admin/edit-patient/' + patient?._id ">{{patient.firstName}} {{patient.lastName}}</span>
-                  <span style="color: #7e84a3; font-size: 11px !important;">{{patient.gender}}, {{getPatientAge(patient) + ' Years'}}</span>
+                  <ng-container *ngIf="patient && patient.email">
+                    <span class="cursor-pointer router-text" [routerLink]="'/admin/edit-patient/' + patient?._id ">{{patient.firstName}} {{patient.lastName}}</span>
+                    <span *ngIf="patient && (patient?.gender || patient?.DOB)" style="color: #7e84a3; font-size: 11px !important;">{{patient?.gender + ','}} {{getPatientAge(patient) + ' Years'}}</span>
+                  </ng-container>
+
+                  <ng-container *ngIf="patient && !patient.email">
+                    <span>Temporary Guest</span>
+                  </ng-container>
                 </div>
               </div>
             </td>
-            <td>{{patient.lastVisit}}</td>
-            <td>{{patient.bloodGroup}}</td>
-            <td>{{patient.phoneNumber}}</td>
+            <td>{{patient?.email}}</td>
+            <td>{{patient?.bloodGroup}}</td>
+            <td>{{patient?.phoneNumber}}</td>
             <td>
-              <p-inputSwitch [ngModel]="patient.status === status.ACTIVE" (onChange)="updatePatientStatus(patient)"></p-inputSwitch>
+              <p-inputSwitch *ngIf="patient && patient.email" [ngModel]="patient.status === status.ACTIVE" (onChange)="updatePatientStatus(patient)"></p-inputSwitch>
             </td>
           </tr>
         </ng-template>
@@ -54,11 +60,7 @@
           </tr>
         </ng-template>
       </p-table>
-
     </div>
   </div>
 </div>
-
-
-<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 

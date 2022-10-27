@@ -6,7 +6,7 @@
 
   </div>
 
-  <div class="button-container">
+  <div class="button-container" *ngIf="!readMode">
     <p-button label="Upload Image" class="p-button-primary" (click)="fileInput.click()"></p-button>
 
     <p>Allowed JPG, JPEG or PNG</p>

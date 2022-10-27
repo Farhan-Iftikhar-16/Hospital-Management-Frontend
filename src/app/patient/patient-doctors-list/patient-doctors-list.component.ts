@@ -4,6 +4,7 @@ import {ApiService} from "../../services/api.service";
 import {ToastService} from "../../services/toast.service";
 import {environment} from "../../../environments/environment";
 import {Subject, takeUntil} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-patient-doctors-list',
@@ -12,8 +13,12 @@ import {Subject, takeUntil} from "rxjs";
 })
 export class PatientDoctorsListComponent implements OnInit {
 
+  selectedDoctor;
   currentPage = 0;
   doctors = [];
+  showLoader = false;
+  showReviewDialog = false;
+  showDoctorProfile = false;
   API_URL = environment.API_URL;
   genderOptions = GENDERS;
   specialistOptions = SPECIALISTS;
@@ -21,7 +26,8 @@ export class PatientDoctorsListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -29,9 +35,13 @@ export class PatientDoctorsListComponent implements OnInit {
   }
 
   getDoctors(): void {
+    this.showLoader = true;
+
     this.apiService.getDoctors().pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.showLoader = false;
       this.doctors = response.doctors;
     }, error => {
+      this.showLoader = false;
       this.toastService.error(error.error.message);
     });
   }
@@ -42,5 +52,14 @@ export class PatientDoctorsListComponent implements OnInit {
 
   onPageChange(event): void {
     this.currentPage = event.page;
+  }
+
+  onReviewClick(doctor): void {
+    this.selectedDoctor = doctor;
+    this.showReviewDialog = true;
+  }
+
+  onScheduleAppointmentClicked(doctor): void {
+    this.router.navigate(['/patient/schedule-appointment/' + doctor._id]).then();
   }
 }

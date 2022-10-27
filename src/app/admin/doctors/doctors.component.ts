@@ -4,6 +4,7 @@ import {ApiService} from "../../services/api.service";
 import {ToastService} from "../../services/toast.service";
 import {Subject, takeUntil} from "rxjs";
 import {ROLES, STATUS, STATUS_VALUE_SET} from "../../config/constant";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-doctors',
@@ -62,6 +63,10 @@ export class DoctorsComponent implements OnInit {
     }
 
     this.filteredDoctors = this.doctors.filter(doctor => doctor.status === 'INACTIVE');
+  }
+
+  getAge(doctor): number {
+    return moment(new Date()).diff(moment(doctor.DOB).format('MM/DD/YYYY'), 'years');
   }
 
   updateDoctorStatus(doctor): void {

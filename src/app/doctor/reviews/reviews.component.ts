@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../services/api.service";
 import {ToastService} from "../../services/toast.service";
 import {Subject, takeUntil} from "rxjs";
+import {environment} from "../../../environments/environment";
+import * as moment from "moment/moment";
 
 @Component({
   selector: 'app-reviews',
@@ -11,7 +13,7 @@ import {Subject, takeUntil} from "rxjs";
 export class ReviewsComponent implements OnInit {
 
   reviews = [];
-  showLoader = false;
+  API_URL = environment.API_URL;
   componentInView = new Subject();
 
   constructor(
@@ -24,15 +26,18 @@ export class ReviewsComponent implements OnInit {
   }
 
   getReviews(): void {
-    this.showLoader = true;
-
     this.apiService.getReviews().pipe(takeUntil(this.componentInView)).subscribe(response => {
-      this.showLoader = false;
       this.reviews = response.reviews;
     }, error => {
-      this.showLoader = true;
       this.toastService.error(error.error.message);
-    })
+    });
+  }
+
+  getDays(createdAt): Number {
+    const createdAtDate = moment(createdAt);
+    const todayDate = moment(new Date);
+
+    return todayDate.diff(createdAtDate, 'days');
   }
 
 }

@@ -56,3 +56,4 @@
 <p-dialog class="schedule-timings-dialog" [(visible)]="editTimeSlots" [header]="'Edit Time Slots'" [modal]="true" [resizable]="false" [draggable]="false" [dismissableMask]="true" [style]="{width: '30vw', height: '80vw'}">
   <app-edit-time-slot *ngIf="editTimeSlots" [setTimeSlotsOptions]="timeSlotsOptions" (emitTimeSlots)="setTimeSlots($event)"></app-edit-time-slot>
 </p-dialog>
+

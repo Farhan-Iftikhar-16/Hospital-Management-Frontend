@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {MenuItem} from "primeng/api";
 import {ROLES} from "../../../config/constant";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,17 +13,23 @@ import {ROLES} from "../../../config/constant";
 export class NavBarComponent implements OnInit {
 
   user;
-  items: MenuItem[] =[];
+  hospital;
+  items: MenuItem[] = [];
+  showLoader = false;
   showMobileNavbarOptions = false;
   API_URL = environment.API_URL;
   roles = ROLES;
+  componentInView = new Subject();
   @Input() options: { label: string, route: string }[] = [];
   @Input() set setUser(user) {
     this.user = {...user, ...this.user};
   }
+  @Input() set setHospital(hospital) {
+    this.hospital = hospital;
+  }
 
   constructor(
-    private router: Router,
+    private router: Router
   ) {
   }
 
@@ -58,6 +65,17 @@ export class NavBarComponent implements OnInit {
         {label: 'Logout', icon: 'pi pi-fw pi-sign-out', command: () => this.logout()}
       ];
     }
+
+    const googleTranslatorContainer = document.querySelector('.skiptranslate');
+
+    if (this.user) {
+      googleTranslatorContainer['style']['right'] = '195px';
+    }
+
+    if (!this.user) {
+      googleTranslatorContainer['style']['right'] = '15px';
+    }
+
   }
 
   logout(): void {
@@ -67,7 +85,7 @@ export class NavBarComponent implements OnInit {
   }
 
   navigateToEditHospital(): void {
-    this.router.navigate(['/admin/edit-hospital/' + this.user._id]).then();
+    this.router.navigate(['/admin/edit-hospital/' + this.hospital._id]).then();
   }
 
   navigateToAdminProfile(): void {

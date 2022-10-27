@@ -38,6 +38,11 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import {PaginatorModule} from 'primeng/paginator';
 import {EditPatientComponent} from "./components/edit-patient/edit-patient.component";
 import {EditDoctorComponent} from "./components/edit-doctor/edit-doctor.component";
+import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
+import {AppointmentsListComponent} from "./components/appointments-list/appointments-list.component";
+import {ChatComponent} from './components/chat/chat.component';
+import {CarouselModule} from 'primeng/carousel';
+import {ScheduleAppointmentComponent} from "./components/schedule-appointment/schedule-appointment.component";
 
 const MODULES = [
   FormsModule,
@@ -70,7 +75,8 @@ const MODULES = [
   TabViewModule,
   SelectButtonModule,
   RatingModule,
-  PaginatorModule
+  PaginatorModule,
+  CarouselModule
 ];
 
 const PROVIDERS = [];
@@ -86,7 +92,11 @@ const COMPONENTS = [
   UploadImageComponent,
   SidebarComponent,
   EditPatientComponent,
-  EditDoctorComponent
+  EditDoctorComponent,
+  AppointmentsListComponent,
+  ResetPasswordComponent,
+  ChatComponent,
+  ScheduleAppointmentComponent
 ];
 
 const DIRECTIVES = [];

@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {environment} from "../../../environments/environment";
-import {ApiService} from "../../services/api.service";
-import {ToastService} from "../../services/toast.service";
+import {environment} from "../../../../environments/environment";
+import {ApiService} from "../../../services/api.service";
+import {ToastService} from "../../../services/toast.service";
 import {Subject, takeUntil} from "rxjs";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-appointments-list',
@@ -11,6 +12,7 @@ import {Subject, takeUntil} from "rxjs";
 })
 export class AppointmentsListComponent implements OnInit {
 
+  user;
   appointments = [];
   showLoader = false;
   API_URL = environment.API_URL;
@@ -26,6 +28,10 @@ export class AppointmentsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    }
+
     if (!this.hideMainHeading) {
       this.getAppointments();
     }
@@ -39,5 +45,13 @@ export class AppointmentsListComponent implements OnInit {
       this.showLoader = false
       this.toastService.error(error.error.message);
     });
+  }
+
+  getAge(model): number {
+    return moment(new Date()).diff(moment(model.DOB).format('MM/DD/YYYY'), 'years');
+  }
+
+  getAppointmentTime(time): any {
+    return moment(time, 'HH:mm A').format('HH:mm A');
   }
 }

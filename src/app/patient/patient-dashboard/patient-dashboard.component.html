@@ -1,1 +1,30 @@
-<p>patient-dashboard works!</p>
+<div class="patient-dashboard-container">
+  <div class="row analytics-container">
+    <div class="col-lg-4 col-md-4 col-sm-12 appointments-container">
+      <h6>Appointments</h6>
+      <h5>{{appointments?.length}}</h5>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h5>Appointments</h5>
+
+      <div class="patient-appointments-container">
+        <p-tabView>
+          <p-tabPanel header="Today">
+            <div>
+              <app-appointments-list [setAppointments]="todayAppointments" [hideMainHeading]="true"></app-appointments-list>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Upcoming">
+            <div>
+              <app-appointments-list [setAppointments]="upcomingAppointments" [hideMainHeading]="true"></app-appointments-list>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+</div>
+

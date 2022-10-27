@@ -34,7 +34,10 @@
 
                   <i *ngIf="!doctor?.profileImage" class="pi pi-user"></i>
                 </div>
-                <span class="cursor-pointer router-text" [routerLink]="'/admin/edit-doctor/' + doctor?._id">{{doctor?.firstName}} {{doctor?.lastName}}</span>
+                <div class="d-flex flex-column">
+                  <span class="cursor-pointer router-text" [routerLink]="'/admin/edit-doctor/' + doctor?._id">{{doctor?.firstName}} {{doctor?.lastName}}</span>
+                  <span style="color: #7e84a3; font-size: 12px !important;">{{doctor?.gender}}, {{getAge(doctor)}}</span>
+                </div>
               </div>
             </td>
             <td>{{doctor?.specializations}}</td>
@@ -55,7 +58,4 @@
     </div>
   </div>
 </div>
-
-
-<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
 

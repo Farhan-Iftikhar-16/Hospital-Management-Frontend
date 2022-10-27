@@ -13,10 +13,10 @@ export class PatientSidePanelComponent implements OnInit {
   API_URL = environment.API_URL;
   sidePanelOptions = [
     {label: 'Dashboard', icon: 'pi pi-chart-line', route: '/patient/dashboard'},
-    {label: 'Appointments', icon: 'pi pi-calendar', route: '/patient/appointments-list/:id'},
+    {label: 'Appointments', icon: 'pi pi-calendar', route: '/patient/appointments-list'},
     {label: 'Doctors', icon: 'pi pi-user-plus', route: '/patient/doctors'},
-    {label: 'Messages', icon: 'pi pi-comments', route: '/patient/messages/:id'},
-    {label: 'Change Password', icon: 'pi pi-lock', route: '/patient/change-password/:id'},
+    {label: 'Messages', icon: 'pi pi-comments', route: '/patient/messages'},
+    {label: 'Reset Password', icon: 'pi pi-lock', route: '/patient/reset-password'},
   ];
   @Input() set setUser(user) {
     if (user) {

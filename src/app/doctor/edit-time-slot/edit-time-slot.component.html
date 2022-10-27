@@ -5,14 +5,14 @@
         <div class="mb-3 form-group col-lg-5 col-md-5 col-sm-5">
           <app-form-control>
             <label [for]="'start-time-' + index">Start Time</label>
-            <p-dropdown class="w-100" [id]="'start-time-' + index" [options]="timeSlotsOptions" [formControlName]="'startTime'"></p-dropdown>
+            <p-dropdown class="w-100" [id]="'start-time-' + index"  [autoDisplayFirst]="false" [options]="timeSlotsOptions" [formControlName]="'startTime'"></p-dropdown>
           </app-form-control>
         </div>
 
         <div class="mb-3 form-group col-lg-5 col-md-5 col-sm-5">
           <app-form-control>
             <label [for]="'end-time-' + index">End Time</label>
-            <p-dropdown class="w-100" [id]="'end-time-' + index" [autoDisplayFirst]="false" [options]="timeSlotsOptions" [formControlName]="'endTime'"></p-dropdown>
+            <p-dropdown class="w-100" [id]="'end-time-' + index" (onChange)="shouldBeAfterStartTime(index)" [autoDisplayFirst]="false" [options]="timeSlotsOptions" [formControlName]="'endTime'"></p-dropdown>
           </app-form-control>
         </div>
 

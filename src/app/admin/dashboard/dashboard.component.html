@@ -21,7 +21,7 @@
         <i class="pi pi-building"></i>
         <div class="overview-details">
           <span class="title">Hospitals</span>
-          <span class="count">4505</span>
+          <span class="count">{{totalHospitals}}</span>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
         <i class="pi pi-user-plus"></i>
         <div class="overview-details">
           <span class="title">Doctors</span>
-          <span class="count">4505</span>
+          <span class="count">{{totalDoctors}}</span>
         </div>
       </div>
     </div>
@@ -39,46 +39,46 @@
         <i class="pi pi-users"></i>
         <div class="overview-details">
           <span class="title">Patients</span>
-          <span class="count">4505</span>
+          <span class="count">{{totalPatients}}</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="content-sub-heading">
-        <h4>Charts</h4>
+  <ng-container *ngIf="isAnalyticsResponseReceived">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="content-sub-heading">
+          <h4>Charts</h4>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="user && user.role === 'SUPER_ADMIN'">
-      <div class="chart-container">
-        <h5>Hospitals</h5>
-        <p-chart type="bar" [data]="hospitals"></p-chart>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="user && user.role === 'SUPER_ADMIN'">
+        <div class="chart-container">
+          <h5>Hospitals</h5>
+          <p-chart type="bar" [data]="hospitals"></p-chart>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="chart-container">
-        <h5>Doctors</h5>
-        <p-chart type="bar" [data]="doctors"></p-chart>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="chart-container">
+          <h5>Doctors</h5>
+          <p-chart type="bar" [data]="doctors"></p-chart>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="chart-container">
-        <h5>Patients</h5>
-        <p-chart type="bar" [data]="patients"></p-chart>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="chart-container">
+          <h5>Patients</h5>
+          <p-chart type="bar" [data]="patients"></p-chart>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </div>
-
-<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>

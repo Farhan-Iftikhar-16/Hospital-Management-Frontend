@@ -6,13 +6,16 @@ import {PatientSidePanelComponent} from './patient-side-panel/patient-side-panel
 import {SharedModule} from "../shared/shared.module";
 import {PatientRoutingModule} from "./patient-routing.module";
 import {PatientDoctorsListComponent} from './patient-doctors-list/patient-doctors-list.component';
+import { ScheduleAppointmentComponent } from '../shared/components/schedule-appointment/schedule-appointment.component';
+import { EditReviewComponent } from './edit-review/edit-review.component';
 
 @NgModule({
   declarations: [
     PatientWrapperComponent,
     PatientDashboardComponent,
     PatientSidePanelComponent,
-    PatientDoctorsListComponent
+    PatientDoctorsListComponent,
+    EditReviewComponent,
   ],
   imports: [
     CommonModule,

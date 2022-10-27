@@ -1,0 +1,76 @@
+<div class="appointments-container">
+  <div class="row mb-5" *ngIf="!hideMainHeading">
+    <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between align-items-center">
+      <div class="content-main-heading">
+        <h3>Appointments</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <p-table [value]="appointments" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll"
+               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 25%" *ngIf="user?.role !== 'DOCTOR'">Doctor</th>
+            <th style="width: 25%" *ngIf="user?.role !== 'PATIENT'">Patient</th>
+            <th style="width: 35%">Purpose</th>
+            <th style="width: 15%">Appointment Date And Time</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-appointment>
+          <tr>
+            <td *ngIf="user?.role === 'PATIENT'">
+              <div class="d-flex align-items-center">
+                <div class="table-main-image">
+                  <img *ngIf="appointment?.doctor?.profileImage" [src]="API_URL + 'public/images/' + appointment?.doctor?.profileImage" alt="image">
+
+                  <i *ngIf="!appointment?.doctor?.profileImage" class="pi pi-user"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="text-capitalize">{{appointment?.doctor?.firstName}} {{appointment?.doctor?.lastName}}</span>
+                  <span style="color: #7e84a3; font-size: 12px !important;">{{appointment?.doctor?.gender}}, {{getAge(appointment?.doctor)}}</span>
+                </div>
+              </div>
+            </td>
+            <td *ngIf="user?.role === 'DOCTOR'">
+              <div class="d-flex align-items-center" *ngIf="appointment?.patient && appointment?.patient?.firstName && appointment?.patient?.lastName">
+                <div class="table-main-image">
+                  <img *ngIf="appointment?.patient?.profileImage" [src]="API_URL + 'public/images/' + appointment?.patient?.profileImage" alt="image">
+
+                  <i *ngIf="!appointment?.patient?.profileImage" class="pi pi-user"></i>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="text-capitalize">{{appointment?.patient?.firstName}} {{appointment?.patient?.lastName}}</span>
+                  <span style="color: #7e84a3; font-size: 12px !important;">{{appointment?.patient?.gender}}, {{getAge(appointment?.patient)}}</span>
+                </div>
+              </div>
+
+              <div *ngIf="appointment?.patient && !appointment?.patient?.firstName && !appointment?.patient?.lastName">
+                <div class="d-flex align-items-center">
+                  <div class="table-main-image">
+                    <i class="pi pi-user"></i>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <p>Guest Patient</p>
+                    <span style="color: #7e84a3;font-size: 12px !important;">{{appointment?.patient?.phoneNumber}}</span>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>{{appointment?.purpose}}</td>
+            <td>{{appointment?.date}} <br> <span style="color: #009efb!important;">{{getAppointmentTime(appointment?.slot)}}</span></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td *ngIf="user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN'"  colspan="4">No appointments found.</td>
+            <td *ngIf="user?.role !== 'ADMIN' && user?.role !== 'SUPER_ADMIN'" colspan="3">No appointments found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+

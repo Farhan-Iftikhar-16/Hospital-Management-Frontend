@@ -1,9 +1,11 @@
-<div>
-  <app-nav-bar [options]="navbarOptions"></app-nav-bar>
-</div>
+<div class="landing-main-container">
+  <div>
+    <app-nav-bar [options]="navbarOptions"></app-nav-bar>
+  </div>
 
-<div class="landing-wrapper-container">
-  <div [@routeAnimations]="o.isActivated ? o.activatedRoute : ''">
-    <router-outlet #o="outlet"></router-outlet>
+  <div class="landing-wrapper-container">
+    <div [@routeAnimations]="o.isActivated ? o.activatedRoute : ''">
+      <router-outlet #o="outlet"></router-outlet>
+    </div>
   </div>
 </div>

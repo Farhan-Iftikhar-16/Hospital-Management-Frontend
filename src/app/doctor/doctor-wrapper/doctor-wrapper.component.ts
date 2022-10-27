@@ -16,6 +16,7 @@ import {UtilService} from "../../services/util.service";
 export class DoctorWrapperComponent implements OnInit {
 
   user;
+  hospital;
   subHeading;
   navbarOptions = [];
   showLoader = false;
@@ -30,6 +31,8 @@ export class DoctorWrapperComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.subHeading = this.utilsService.getSubHeader(this.router.url);
+
     if (localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user'));
     }
@@ -41,7 +44,7 @@ export class DoctorWrapperComponent implements OnInit {
 
     this.router.events.forEach(event => {
       if (event instanceof NavigationStart) {
-        this.subHeading = this.utilsService.getSubHeader(event);
+        this.subHeading = this.utilsService.getSubHeader(event.url);
       }
     }).then();
   }
@@ -52,8 +55,19 @@ export class DoctorWrapperComponent implements OnInit {
     this.apiService.getUserDetailsByUserId(api).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.showLoader = false;
       this.user = response.doctor;
+
+      this.getHospitalDetailsAdminId();
+
     }, error => {
       this.showLoader = false;
+      this.toastService.error(error.error.message);
+    });
+  }
+
+  getHospitalDetailsAdminId(): void {
+    this.apiService.getHospitalDetailsAdminId(this.user.createdBy).pipe(takeUntil(this.componentInView)).subscribe(response => {
+      this.hospital = response.hospital;
+    }, error => {
       this.toastService.error(error.error.message);
     });
   }

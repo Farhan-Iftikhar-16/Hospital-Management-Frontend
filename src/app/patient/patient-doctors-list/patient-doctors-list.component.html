@@ -11,56 +11,75 @@
     </div>
   </div>
 
-  <div class="row" *ngIf="doctors && doctors.length === 0">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <h5>No Doctors Found</h5>
-    </div>
-  </div>
-
-  <div class="row" *ngIf="doctors && doctors.length > 0">
-    <div class="col-lg-12 col-md-12 col-sm-12" *ngFor="let doctor of doctors | slice:(currentPage * 10): ((currentPage * 10) + 10);">
-      <div class="doctor-details-container mb-3">
-        <div class="d-flex">
-          <div class="doctor-image">
-            <img *ngIf="doctor?.profileImage" [src]="API_URL + 'public/images/' + doctor?.profileImage" alt="logo">
-
-            <i *ngIf="!doctor?.profileImage" class="pi pi-user"></i>
-          </div>
-
-          <div class="details-container">
-            <h4 class="doctor-name">{{doctor?.firstName}} {{doctor?.lastName}}</h4>
-
-            <span *ngIf="doctor?.education && doctor?.education?.length > 0" class="doctor-education">
-              {{getDoctorDegrees(doctor).toString()}}
-            </span>
-
-            <span *ngIf="doctor?.specializations" >
-              {{doctor?.specializations?.toString()}}
-            </span>
-
-            <span class="d-flex align-items-center">
-              <p-rating [cancel]="false" [disabled]="true" class="me-3"></p-rating> <span class="doctor-reviews">({{doctor?.reviews ? doctor?.reviews : '0'}})</span>
-            </span>
-
-            <span class="doctor-address" *ngIf="doctor?.addressDetails && doctor?.addressDetails?.city && doctor?.addressDetails?.country">
-              <i class="pi pi-map-marker"></i>
-              {{doctor?.addressDetails?.city}}, {{doctor?.addressDetails?.country}}
-            </span>
-
-            <div class="d-flex align-items-center flex-wrap doctor-services-container">
-              <div *ngFor="let service of doctor.services" class="doctor-service">
-                <span>{{service}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex flex-column justify-content-end">
-          <p-button [label]="'View Profile'" class="p-button-teritory mb-3 w-100"></p-button>
-          <p-button [label]="'Book Appointment'" class="p-button-primary w-100"></p-button>
-        </div>
+  <ng-container *ngIf="!selectedDoctor && !showDoctorProfile">
+    <div class="row" *ngIf="doctors && doctors.length === 0">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <h5>No Doctors Found</h5>
       </div>
     </div>
 
-    <p-paginator [rows]="10" [totalRecords]="doctors.length" (onPageChange)="onPageChange($event)"></p-paginator>
-  </div>
+    <div class="row" *ngIf="doctors && doctors.length > 0">
+      <div class="col-lg-12 col-md-12 col-sm-12" *ngFor="let doctor of doctors | slice:(currentPage * 10): ((currentPage * 10) + 10);">
+        <div class="doctor-details-container mb-3">
+          <div class="d-flex">
+            <div class="doctor-image">
+              <img *ngIf="doctor?.profileImage" [src]="API_URL + 'public/images/' + doctor?.profileImage" alt="logo">
+
+              <i *ngIf="!doctor?.profileImage" class="pi pi-user"></i>
+            </div>
+
+            <div class="details-container">
+              <h4 class="doctor-name">{{doctor?.firstName}} {{doctor?.lastName}}</h4>
+
+              <span *ngIf="doctor?.education && doctor?.education?.length > 0" class="doctor-education">
+                {{getDoctorDegrees(doctor).toString()}}
+              </span>
+
+              <span *ngIf="doctor?.specializations">
+                {{doctor?.specializations?.toString()}}
+              </span>
+
+              <span class="d-flex align-items-center">
+                <p-rating [cancel]="false" [readonly]="true" name="doctor-dating" [ngModel]="doctor.rating" class="me-3"></p-rating> <span class="doctor-reviews">({{doctor?.totalReviews}})</span>
+              </span>
+
+              <span class="doctor-address" *ngIf="doctor?.addressDetails && doctor?.addressDetails?.city && doctor?.addressDetails?.country">
+                <i class="pi pi-map-marker"></i>
+                  {{doctor?.addressDetails?.city}}, {{doctor?.addressDetails?.country}}
+              </span>
+
+              <div class="d-flex align-items-center flex-wrap doctor-services-container">
+                <div *ngFor="let service of doctor.services" class="doctor-service">
+                  <span>{{service}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-column justify-content-end">
+            <p-button [label]="'Review'" class="p-button-secondary mb-3 w-100" (click)="onReviewClick(doctor)"></p-button>
+            <p-button [label]="'View Profile'" (click)="selectedDoctor = doctor; showDoctorProfile = true" class="p-button-teritory mb-3 w-100"></p-button>
+            <p-button [label]="'Schedule Appointment'" (click) = "onScheduleAppointmentClicked(doctor)" class="p-button-primary w-100"></p-button>
+          </div>
+        </div>
+      </div>
+
+      <p-paginator [rows]="10" [totalRecords]="doctors.length" (onPageChange)="onPageChange($event)"></p-paginator>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectedDoctor && showDoctorProfile">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 mb-3 d-flex justify-content-end align-items-center">
+        <p-button [label]="'Back'" class="p-button-secondary" (click)="showDoctorProfile = false; selectedDoctor = null"></p-button>
+      </div>
+    </div>
+
+    <app-edit-doctor [doctor]="selectedDoctor"></app-edit-doctor>
+  </ng-container>
 </div>
+
+<p-dialog  [(visible)]="showReviewDialog" (onHide)="selectedDoctor = null" [header]="'Review For ' + selectedDoctor?.firstName + ' ' + selectedDoctor?.lastName" [modal]="true" [resizable]="false" [draggable]="false" [dismissableMask]="true" [style]="{width: '65vw'}">
+  <app-edit-review *ngIf="showReviewDialog" [doctor]="selectedDoctor" (hideDialog)="showReviewDialog = false; this.getDoctors()"></app-edit-review>
+</p-dialog>
+
+

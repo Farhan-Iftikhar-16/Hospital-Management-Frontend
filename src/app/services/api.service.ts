@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 
@@ -20,7 +20,11 @@ export class ApiService {
   }
 
   signup(params): Observable<any> {
-      return this.httpClient.post(`${this.apiURL}admin/add-admin`, params);
+    return this.httpClient.post(`${this.apiURL}admin/add-admin`, params);
+  }
+
+  resetPassword(params): Observable<any> {
+    return this.httpClient.put(`${this.apiURL}auth/reset-password`, params);
   }
 
   getUserDetailsByUserId(api): Observable<any> {
@@ -52,15 +56,19 @@ export class ApiService {
   }
 
   updateHospital(params): Observable<any> {
-    return this.httpClient.put(`${this.apiURL}hospital/update-hospital/${params._id}`, params);
+    return this.httpClient.put(`${this.apiURL}hospital/update-hospital/${params.id}`, params);
   }
 
   getHospitals(): Observable<any> {
     return this.httpClient.get(`${this.apiURL}hospital/get-hospitals`);
   }
 
-  getHospitalDetails(): Observable<any> {
-    return this.httpClient.get(`${this.apiURL}hospital/get-hospital-details`);
+  getHospitalDetails(id): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}hospital/get-hospital-details/${id}`);
+  }
+
+  getHospitalDetailsAdminId(adminId): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}hospital/get-hospital-details-by-admin/${adminId}`);
   }
 
   deleteHospital(id): Observable<any> {
@@ -76,11 +84,23 @@ export class ApiService {
   }
 
   updateDoctor(params): Observable<any> {
-    return this.httpClient.put(`${this.apiURL}doctor/update-doctor/${params._id}`, params)
+    return this.httpClient.put(`${this.apiURL}doctor/update-doctor/${params.id}`, params)
   }
 
-  getDoctors(): Observable<any> {
-    return this.httpClient.get(`${this.apiURL}doctor/get-doctors`);
+  getDoctors(queryParams = null): Observable<any> {
+    if (!queryParams) {
+      return this.httpClient.get(`${this.apiURL}doctor/get-doctors`);
+    }
+
+    let params = new HttpParams()
+
+    for (const param in queryParams) {
+      if (queryParams && queryParams[param]) {
+        params = params.set(param, queryParams[param]);
+      }
+    }
+
+    return this.httpClient.get(`${this.apiURL}doctor/get-doctors`, {params});
   }
 
   getDoctorDetails(id): Observable<any> {
@@ -103,16 +123,28 @@ export class ApiService {
     return this.httpClient.get(`${this.apiURL}doctor/get-doctor-analytics`);
   }
 
+  getTopRatedDoctors(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}doctor/get-top-rated-doctors`);
+  }
+
   addPatient(params): Observable<any> {
     return this.httpClient.post(`${this.apiURL}patient/add-patient`, params)
   }
 
   updatePatient(params): Observable<any> {
-    return this.httpClient.put(`${this.apiURL}patient/update-patient/${params._id}`, params)
+    return this.httpClient.put(`${this.apiURL}patient/update-patient/${params.id}`, params)
   }
 
   getPatients(): Observable<any> {
     return this.httpClient.get(`${this.apiURL}patient/get-patients`);
+  }
+
+  getRecentPatients(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}get-recent-patients-or-doctors/get-patients`);
+  }
+
+  getRecentDoctors(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}get-recent-patients-or-doctors/get-doctors`);
   }
 
   getPatientDetails(id): Observable<any> {
@@ -125,6 +157,10 @@ export class ApiService {
 
   updatePatientStatus(params, id): Observable<any> {
     return this.httpClient.put(`${this.apiURL}patient/update-patient-status/${id}`, params);
+  }
+
+  scheduleAppointment(params): Observable<any> {
+    return this.httpClient.post(`${this.apiURL}appointment/schedule-appointment`, params);
   }
 
   getAppointments(): Observable<any> {
@@ -147,4 +183,31 @@ export class ApiService {
 
     return this.httpClient.post(`${this.apiURL}image/upload-image`, formData);
   }
+
+  getUserRecentChats(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}chat/get-user-recent-chats`);
+  }
+
+  getUsers(query): Observable<any> {
+    const params = new HttpParams().set('searchText',query);
+
+    return this.httpClient.get(`${this.apiURL}chat/get-users`, {params})
+  }
+
+  addReview(params): Observable<any> {
+    return this.httpClient.post(`${this.apiURL}review/add-review`, params);
+  }
+
+  getSignature(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}signature`);
+  }
+
+  getSuperAdminAnalytics(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}analytics/super-admin`);
+  }
+
+  getAdminAnalytics(): Observable<any> {
+    return this.httpClient.get(`${this.apiURL}analytics/admin`);
+  }
+
 }

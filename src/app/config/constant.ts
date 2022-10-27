@@ -23,11 +23,11 @@ const GENDERS = [
 ]
 
 const SPECIALISTS = [
-  {label: 'Urology', value: 'Urology'},
-  {label: 'Orthopedic', value: 'Orthopedic'},
-  {label: 'Cardiologis', value: 'Cardiologis'},
-  {label: 'Dentist', value: 'Dentist'},
-  {label: 'Neurology', value: 'Neurology'},
+  {label: 'Urology', value: 'UROLOGY'},
+  {label: 'Orthopedic', value: 'ORTHOPEDICOrthopedic'},
+  {label: 'Cardiologist', value: 'CARDIOLOGIST'},
+  {label: 'Dentist', value: 'DENTISTDentist'},
+  {label: 'Neurology', value: 'NEUROLOGY'},
 ]
 
 const STATUS = {
@@ -52,6 +52,10 @@ const STATUS_VALUE_SET = [
   {label: 'Inactive', value: 'INACTIVE'}
 ]
 
+const PATTERNS = {
+  PASSWORD: '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[`\\\'\\~!@#%$%^&*()_+\\-=\\[\\]{};:"\\|,.<>\\/?])[A-Za-z\\d*`\\\'\\~!@#%$%^&*()_+\\-=\\[\\]{};:"\\|,.<>\\/?]{8,}$'
+}
+
 export {
   ERROR_MESSAGES,
   ROLES,
@@ -59,5 +63,6 @@ export {
   STATUS,
   STATUS_VALUE_SET,
   BLOOD_GROUP_VALUE_SET,
-  SPECIALISTS
+  SPECIALISTS,
+  PATTERNS
 };

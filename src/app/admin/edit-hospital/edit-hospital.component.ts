@@ -5,6 +5,7 @@ import {ApiService} from "../../services/api.service";
 import {Subject, takeUntil} from "rxjs";
 import {ToastService} from "../../services/toast.service";
 import {environment} from "../../../environments/environment";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit-hospital',
@@ -15,16 +16,17 @@ export class EditHospitalComponent implements OnInit {
 
   user;
   form: FormGroup;
-  showLoader = false;
   API_URL = environment.API_URL;
   componentInView = new Subject();
-  @Output() closeDialog = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
     private utilsService: UtilService,
     private apiService: ApiService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private utilService: UtilService
   ) { }
 
   ngOnInit(): void {
@@ -34,12 +36,16 @@ export class EditHospitalComponent implements OnInit {
 
     this.createForm();
 
-    this.getHospitalDetails();
+    this.activatedRoute.params.pipe(takeUntil(this.componentInView)).subscribe(params => {
+      if (params && params.id) {
+        this.getHospitalDetails(params.id);
+      }
+    });
   }
 
   createForm(): void {
     this.form = this.formBuilder.group({
-      _id: new FormControl(''),
+      id: new FormControl(''),
       profileImage: new FormControl(''),
       name: new FormControl('', Validators.required),
       createdBy: new FormControl('', Validators.required),
@@ -48,20 +54,17 @@ export class EditHospitalComponent implements OnInit {
     });
   }
 
-  getHospitalDetails(): void {
-    this.showLoader = true;
-
-    this.apiService.getHospitalDetails().pipe(takeUntil(this.componentInView)).subscribe(response => {
-      this.showLoader = false;
+  getHospitalDetails(id): void {
+    this.apiService.getHospitalDetails(id).pipe(takeUntil(this.componentInView)).subscribe(response => {
       if (response && response.hospital) {
         this.form.patchValue(response.hospital);
+        this.form.get('id').setValue(response.hospital._id);
         this.form.get('email').disable();
         return;
       }
 
       this.form.get('createdBy').setValue(this.user._id);
     }, error => {
-      this.showLoader = false;
       this.toastService.error(error.error.message);
     });
   }
@@ -81,45 +84,25 @@ export class EditHospitalComponent implements OnInit {
     }
 
 
-    this.form.get('_id').value ? this.updateHospital(params) : this.addHospital(params);
+    params.id ? this.updateHospital(params) : this.addHospital(params);
   }
 
   updateHospital(params): void {
-    this.showLoader = true;
-
     this.apiService.updateHospital(params).pipe(takeUntil(this.componentInView)).subscribe((response) => {
-      this.showLoader = false;
       this.toastService.success(response.message);
-      this.closeDialog.emit();
+      this.utilsService.hospitalDetailsUpdated.next(null);
+      this.router.navigate(['/admin/hospitals']).then();
     }, error => {
-      this.showLoader = false;
       this.toastService.error(error.error.message);
     });
   }
 
   addHospital(params): void {
-    this.showLoader = true;
-
     this.apiService.addHospital(params).pipe(takeUntil(this.componentInView)).subscribe((response) => {
-      this.showLoader = false;
       this.toastService.success(response.message);
-      this.closeDialog.emit();
-      // this.sendLoginCredentialsEmail(response.hospital);
+      this.router.navigate(['/admin/hospitals']).then();
     }, error => {
-      this.showLoader = false;
       this.toastService.error(error.error.message);
     });
   }
-
-  // sendLoginCredentialsEmail(hospital): void {
-  //   this.apiService.sendLoginCredentialsEmail(hospital._id).pipe(takeUntil(this.componentInView)).subscribe(response => {
-  //     this.showLoader= false;
-  //     this.toastService.success(response.message);
-  //     this.closeDialog.emit();
-  //   }, () => {
-  //     this.sendLoginCredentialsEmail(hospital);
-  //   });
-  // }
-
-
 }

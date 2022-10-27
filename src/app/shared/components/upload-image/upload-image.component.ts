@@ -19,6 +19,7 @@ export class UploadImageComponent implements OnInit {
   };
   componentInView = new Subject();
   @Input() icon;
+  @Input() readMode;
   @Input() set setImageName(name) {
     if (name) {
       this.uploadedImage.name = name;

@@ -19,5 +19,4 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
   ]
 })
 
-// @ts-ignore
-export class LandingModule {}// @ts-ignore
+export class LandingModule {}

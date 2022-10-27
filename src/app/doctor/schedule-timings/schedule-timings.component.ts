@@ -33,7 +33,7 @@ export class ScheduleTimingsComponent implements OnInit {
     {label: 'Wednesday', value: '', disabled: false},
     {label: 'Thursday', value: '', disabled: false},
     {label: 'Friday', value: '', disabled: false},
-    {label: 'Saturday', value: '', disabled: false},
+    {label: 'Saturday', value: '', disabled: false}
   ];
 
   componentInView = new Subject();
@@ -69,13 +69,13 @@ export class ScheduleTimingsComponent implements OnInit {
 
   onAppointmentSlotDurationChanged(): void {
     this.timeSlots.clear();
+    this.timeSlotsOptions = [];
 
     let startTime = moment('00:00', 'HH:mm A');
-    let endTime = moment('23:45', 'HH:mm A');
+    const endTime = moment('23:45', 'HH:mm A');
 
     while (startTime <= endTime) {
-      const slot = moment(startTime).format('HH:mm A');
-      this.timeSlotsOptions.push({label: slot, value: slot});
+      this.timeSlotsOptions.push({label: moment(startTime).format('HH:mm A'), value: moment(startTime).format('HH:mm')});
       startTime.add(this.form.get('slotDuration').value, 'minutes');
     }
   }
@@ -85,14 +85,16 @@ export class ScheduleTimingsComponent implements OnInit {
     const day = date.getDay();
 
     this.appointmentDaysOptions.forEach((item, index) => {
-      if (index < day - 1) {
+      if (index < day) {
         item.disabled = true;
       }
 
       item.value = new Date(date.setDate(date.getDate() - date.getDay() + index)).toISOString().slice(0, 10)
     });
 
-    this.form.get('day').setValue(this.appointmentDaysOptions[0].value);
+    const index = this.appointmentDaysOptions.findIndex(item => item.disabled === false);
+
+    this.form.get('day').setValue(this.appointmentDaysOptions[index].value);
   }
 
   onEditClicked(): void {
@@ -137,6 +139,7 @@ export class ScheduleTimingsComponent implements OnInit {
 
     this.apiService.scheduleTimings(params).pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.toastService.success(response.message);
+      this.router.navigate(['/doctor/dashboard']).then();
     }, error => {
       this.toastService.error(error.error.message);
     })

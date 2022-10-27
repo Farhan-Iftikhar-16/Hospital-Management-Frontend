@@ -155,6 +155,9 @@ body {
   margin: 0;
   padding: 0;
   background: #F6F5F7;
+  position: relative;
+  min-height: 100%;
+  top: 0 !important;
 }
 
 .cursor-pointer {
@@ -260,8 +263,8 @@ input:enabled:hover, textarea:enabled:hover, .p-dropdown:not(p-disabled):hover, 
 
 .p-button-success .p-button {
   color: #ffffff !important;
-  background: #22C55E !important;
-  border: 1px solid #22C55E !important;
+  background: #09e5ab !important;
+  border: 1px solid #09e5ab !important;
 }
 
 .p-button-success .p-button:enabled:hover {
@@ -375,9 +378,16 @@ p-table .p-datatable-table {
 }
 
 .p-dialog {
-  .p-dialog-header .p-dialog-header-icon {
-    width: min-content !important;
-    height: min-content !important;
+  .p-dialog-header {
+    .p-dialog-title {
+      text-transform: capitalize;
+    }
+
+    .p-dialog-header-icon {
+      width: min-content !important;
+      height: min-content !important;
+    }
+
   }
 
   :enabled:hover {
@@ -440,6 +450,19 @@ p-table .p-datatable-table {
   }
 }
 
+.p-selectbutton {
+  display: flex;
+
+  .p-button {
+    flex: 1 1 0;
+  }
+
+  .p-button.p-highlight {
+    background: #ff4877 !important;
+    border-color: #ff4877 !important;
+  }
+}
+
 .p-rating {
   display: flex;
   justify-content: flex-end;
@@ -447,9 +470,9 @@ p-table .p-datatable-table {
   margin-bottom: 10px;
 
   .p-rating-icon {
-    height: 15px;
-    width: 15px;
-    font-size: 15px;
+    height: 15px !important;
+    width: 15px !important;
+    font-size: 15px !important;
   }
 
   .p-rating-icon:focus {
@@ -469,6 +492,29 @@ p-table .p-datatable-table {
   opacity: 1 !important;
 }
 
+p-password {
+  div  {
+    position: relative;
+    width: 100%;
+    display: inline-block !important;
+
+    input {
+      width: 100%;
+    }
+
+    i {
+      position: absolute;
+      top: 25px;
+      margin-top: -0.5rem;
+    }
+
+    i:last-of-type {
+      right: 0.75rem;
+      color: #6c757d;
+    }
+  }
+}
+
 @media (max-width: 576px) {
   p-paginator .p-paginator {
     display: block !important;
@@ -483,6 +529,46 @@ p-table .p-datatable-table {
       margin: 15px 0 !important;
       display: inline-block;
     }
+  }
+}
+
+.skiptranslate {
+  color: transparent !important;
+  position: fixed;
+  top: 14px;
+  right: 15px;
+  z-index: 999;
+
+  > div {
+    margin: 0 !important;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  select {
+    background: transparent;
+    border: none;
+    outline: none !important;
+    cursor: pointer;
+    color: #15558d;
+  }
+
+  > span {
+    display: none !important;
+  }
+}
+
+.goog-te-banner-frame {
+  display: none !important;
+}
+.goog-te-combo  {
+  option {
+    display: none !important;
+  }
+
+  option[value = 'ar'], option[value = 'en'] {
+    display: block !important;
   }
 }
 

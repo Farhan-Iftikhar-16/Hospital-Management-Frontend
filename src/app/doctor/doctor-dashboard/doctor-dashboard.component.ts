@@ -43,7 +43,7 @@ export class DoctorDashboardComponent implements OnInit {
     this.apiService.getAppointments().pipe(takeUntil(this.componentInView)).subscribe(response => {
       this.showLoader = false;
       if (response && response.appointments && response.appointments.length > 0) {
-        const appointments = response.appoinments;
+        const appointments = response.appointments;
         this.upcomingAppointments = appointments.filter(appointment =>  moment(new Date()).isAfter(new Date(appointment.dateAndTime)));
         this.todayAppointments = appointments.filter(appointment => moment(new Date(), 'DD-MMM-YYYY') === moment(new Date(appointment.dateAndTime), 'DD-MMM-YYYY'));
       }
@@ -52,5 +52,4 @@ export class DoctorDashboardComponent implements OnInit {
       this.toastService.error(error.error.message);
     });
   }
-
 }

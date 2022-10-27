@@ -22,14 +22,14 @@
 
       <div class="patient-appointments-container">
         <p-tabView>
-          <p-tabPanel header="Upcoming">
-           <div>
-             <app-appointments-list [setAppointments]="upcomingAppointments" [hideMainHeading]="true"></app-appointments-list>
-           </div>
-          </p-tabPanel>
           <p-tabPanel header="Today">
             <div>
               <app-appointments-list [setAppointments]="todayAppointments" [hideMainHeading]="true"></app-appointments-list>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="Upcoming">
+            <div>
+              <app-appointments-list [setAppointments]="upcomingAppointments" [hideMainHeading]="true"></app-appointments-list>
             </div>
           </p-tabPanel>
         </p-tabView>
@@ -37,5 +37,3 @@
     </div>
   </div>
 </div>
-
-<p-progressSpinner *ngIf="showLoader"></p-progressSpinner>
